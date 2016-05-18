@@ -1,0 +1,12 @@
+# Visual Studio
+ipch
+debug
+release
+*.txt
+*.sln
+*.suo
+*.aps
+*.sdf
+*.opensdf
+*.vcxproj
+*.vcxproj.filters

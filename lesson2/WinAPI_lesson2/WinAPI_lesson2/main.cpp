@@ -31,14 +31,14 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_TIMER:
 		//MessageBox(hDlg, L"ku-ku", L"Information", MB_OK | MB_ICONINFORMATION); // Example 1
-		MoveWindow(hDlg, 0 + x, 100, 250, 130, TRUE);
-		x += 10;
+		MoveWindow(hDlg, 100 + x, 100 + x, 250, 130, TRUE);
+		++x;
 		break;
 	case WM_COMMAND:
 		switch (wParam)
 		{
 		case IDC_BUTTON1:
-			SetTimer(hDlg, 1, 20, NULL);
+			SetTimer(hDlg, 1, 50, NULL);
 			break;
 		case IDC_BUTTON2:
 			KillTimer(hDlg, 1);
