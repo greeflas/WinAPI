@@ -25,7 +25,12 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	const int BUF_SIZE = 1024;
 	TCHAR buf[BUF_SIZE];
 
+	// delete button
 	int index(-1);
+
+	// calc button
+	int items_count(0);
+	double sum(0);
 
 	switch (message)
 	{
@@ -58,8 +63,19 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case IDC_BTN_CLEAR:
 			SendMessage(hList, LB_RESETCONTENT, 0, 0);
+			SetWindowText(hEditResult, L"");
 			break;
 		case IDC_BTN_CALC:
+			items_count = SendMessage(hList, LB_GETCOUNT, 0, 0);
+			for (int i = 0; i < items_count; ++i)
+			{
+				SendMessage(hList, LB_GETTEXT, i, (LPARAM)buf);
+				sum += _wtoi(buf);
+			}
+			sum /= items_count;
+			swprintf(buf, L"%f", sum);
+
+			SetWindowText(hEditResult, buf);
 			break;
 		}
 		break;
