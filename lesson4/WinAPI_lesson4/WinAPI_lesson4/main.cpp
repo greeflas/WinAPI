@@ -25,6 +25,8 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	const int BUF_SIZE = 1024;
 	TCHAR buf[BUF_SIZE];
 
+	int index(-1);
+
 	switch (message)
 	{
 	case WM_INITDIALOG:
@@ -41,12 +43,17 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 		case IDC_BTN_ADD:
 			GetWindowText(hEditAdd, buf, BUF_SIZE);
-			if (lstrlen(buf) == 0)
-				MessageBox(hDlg, L"Field cannot be blank!", L"Error", MB_OK | MB_ICONERROR);
-			else
+			if (lstrlen(buf) != 0)
 				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)buf);
+			else
+				MessageBox(hDlg, L"Field cannot be blank!", L"Error", MB_OK | MB_ICONERROR);
 			break;
 		case IDC_BTN_DELETE:
+			index = SendMessage(hList, LB_GETCURSEL, 0, 0);
+			if (index != -1)
+				SendMessage(hList, LB_DELETESTRING, index, 0);
+			else
+				MessageBox(hDlg, L"List item not selected!", L"Error", MB_OK | MB_ICONERROR);
 			break;
 		case IDC_BTN_CLEAR:
 			break;
