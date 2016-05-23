@@ -2,6 +2,7 @@
 ipch
 debug
 release
+*.db
 *.txt
 *.sln
 *.suo
