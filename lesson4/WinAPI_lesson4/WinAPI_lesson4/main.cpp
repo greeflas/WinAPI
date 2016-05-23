@@ -22,6 +22,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	const int BUF_SIZE = 1024;
+	TCHAR buf[BUF_SIZE];
+
 	switch (message)
 	{
 	case WM_INITDIALOG:
@@ -37,6 +40,11 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case IDC_BTN_ADD:
+			GetWindowText(hEditAdd, buf, BUF_SIZE);
+			if (lstrlen(buf) == 0)
+				MessageBox(hDlg, L"Field cannot be blank!", L"Error", MB_OK | MB_ICONERROR);
+			else
+				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)buf);
 			break;
 		case IDC_BTN_DELETE:
 			break;
