@@ -30,7 +30,6 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 	// calc button
 	int items_count(0);
-	double sum(0);
 
 	switch (message)
 	{
@@ -42,6 +41,8 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		hBtnDelete = GetDlgItem(hDlg, IDC_BTN_DELETE);
 		hBtnClear = GetDlgItem(hDlg, IDC_BTN_CLEAR);
 		hBtnCalc = GetDlgItem(hDlg, IDC_BTN_CALC);
+
+		EnableWindow(hEditResult, FALSE);
 		break;
 	case WM_COMMAND:
 		switch (wParam)
@@ -62,20 +63,32 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 				MessageBox(hDlg, L"List item not selected!", L"Error", MB_OK | MB_ICONERROR);
 			break;
 		case IDC_BTN_CLEAR:
-			SendMessage(hList, LB_RESETCONTENT, 0, 0);
-			SetWindowText(hEditResult, L"");
+			items_count = SendMessage(hList, LB_GETCOUNT, 0, 0);
+			if (items_count == 0)
+				MessageBox(hDlg, L"List is empty!", L"Error", MB_OK | MB_ICONERROR);
+			else
+			{
+				SendMessage(hList, LB_RESETCONTENT, 0, 0);
+				SetWindowText(hEditResult, L"");
+			}
 			break;
 		case IDC_BTN_CALC:
 			items_count = SendMessage(hList, LB_GETCOUNT, 0, 0);
-			for (int i = 0; i < items_count; ++i)
+			if (items_count == 0)
+				MessageBox(hDlg, L"List is empty!", L"Error", MB_OK | MB_ICONERROR);
+			else
 			{
-				SendMessage(hList, LB_GETTEXT, i, (LPARAM)buf);
-				sum += _wtoi(buf);
-			}
-			sum /= items_count;
-			swprintf(buf, L"%f", sum);
+				double sum(0), res(0);
+				for (int i = 0; i < items_count; ++i)
+				{
+					SendMessage(hList, LB_GETTEXT, i, (LPARAM)buf);
+					sum += _wtof(buf);
+				}
+				res = sum / items_count;
+				swprintf_s(buf, L"%f", res);
 
-			SetWindowText(hEditResult, buf);
+				SetWindowText(hEditResult, buf);
+			}
 			break;
 		}
 		break;
