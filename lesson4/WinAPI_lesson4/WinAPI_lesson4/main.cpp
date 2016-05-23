@@ -47,6 +47,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)buf);
 			else
 				MessageBox(hDlg, L"Field cannot be blank!", L"Error", MB_OK | MB_ICONERROR);
+			SetWindowText(hEditAdd, L"");
 			break;
 		case IDC_BTN_DELETE:
 			index = SendMessage(hList, LB_GETCURSEL, 0, 0);
@@ -56,6 +57,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 				MessageBox(hDlg, L"List item not selected!", L"Error", MB_OK | MB_ICONERROR);
 			break;
 		case IDC_BTN_CLEAR:
+			SendMessage(hList, LB_RESETCONTENT, 0, 0);
 			break;
 		case IDC_BTN_CALC:
 			break;
