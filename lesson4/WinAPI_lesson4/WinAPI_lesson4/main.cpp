@@ -85,7 +85,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 					sum += _wtof(buf);
 				}
 				res = sum / items_count;
-				swprintf_s(buf, L"%f", res);
+				swprintf_s(buf, L"%.3f", res);
 
 				SetWindowText(hEditResult, buf);
 			}
