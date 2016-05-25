@@ -13,9 +13,24 @@ HWND hListGoods, hListBasket;
 HWND hBtnAdd, hBtnDel, hBtnClear;
 
 // categories
+enum Category
+{
+	GAME_PC,
+	WORk_PC,
+	NOTEBOOKS
+};
+
 const TCHAR CAT1[] = L"Ноутбуки";
 const TCHAR CAT2[] = L"Игровые компьютеры";
 const TCHAR CAT3[] = L"Компьютеры для работы и учёбы";
+
+// goods
+const int GOODS_NUM = 3;
+const TCHAR *CAT_NOTEBOOKS[GOODS_NUM] = {
+	L"Dell Inspiron 5558, Цена - 19 900грн",
+	L"Dell Inspiron 3543, Цена - 13 799грн",
+	L"Dell Inspiron 3542, Цена - 7 099грн"
+};
 
 BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -62,6 +77,23 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case IDC_BTN_CLEAR:
 			break;
+		}
+
+		if (LOWORD(wParam) == IDC_COMBO_CAT
+			&& HIWORD(wParam) == CBN_SELCHANGE)
+		{
+			SendMessage(hListGoods, LB_RESETCONTENT, 0, 0);
+
+			int cat = SendMessage(hComboCat, CB_GETCURSEL, 0, 0);
+			switch (cat)
+			{
+			case Category::NOTEBOOKS:
+				for (size_t i = 0; i < GOODS_NUM; ++i)
+				{
+					SendMessage(hListGoods, LB_ADDSTRING, 0, (LPARAM)CAT_NOTEBOOKS[i]);
+				}
+				break;
+			}
 		}
 		break;
 	case WM_CLOSE:
