@@ -58,8 +58,10 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (LOWORD(wParam))
 		{
 		case IDC_BTN_START:
+			SetTimer(hDlg, 1, 3000, NULL);
 			break;
 		case IDC_BTN_STOP:
+			KillTimer(hDlg, 1);
 			break;
 		case IDC_BTN_PREV:
 			break;
@@ -73,6 +75,14 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		}
+		break;
+	case WM_TIMER:
+		if (img_index > IMG_NUM)
+			img_index = 0;
+		else
+			++img_index;
+
+		SendMessage(hStaticImage, STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[img_index]));
 		break;
 	case WM_CLOSE:
 		EndDialog(hDlg, 0);
