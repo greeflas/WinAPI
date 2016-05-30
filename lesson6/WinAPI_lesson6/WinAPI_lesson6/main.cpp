@@ -42,6 +42,9 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		hBtnPrev = GetDlgItem(hDlg, IDC_BTN_PREV);
 		hBtnNext = GetDlgItem(hDlg, IDC_BTN_NEXT);
 
+		EnableWindow(hBtnStop, FALSE);
+		EnableWindow(hBtnStart, FALSE);
+
 		for (size_t i = 0; i < IMG_NUM; ++i)
 		{
 			hBmp[i] = LoadBitmap(GetModuleHandle(0), MAKEINTRESOURCE(IDB_BITMAP7 + i));
@@ -58,18 +61,33 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (LOWORD(wParam))
 		{
 		case IDC_BTN_START:
+			EnableWindow(hBtnStop, TRUE);
 			SetTimer(hDlg, 1, 3000, NULL);
 			break;
 		case IDC_BTN_STOP:
+			EnableWindow(hBtnStop, FALSE);
 			KillTimer(hDlg, 1);
 			break;
 		case IDC_BTN_PREV:
+			if (img_index == 0)
+				img_index = 5;
+			else
+				--img_index;
+			SendMessage(hStaticImage, STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[img_index]));
 			break;
 		case IDC_BTN_NEXT:
+			//img_index = SendMessage(hListImages, LB_GETCURSEL, 0, 0);
+			if (img_index == 5)
+				img_index = 0;
+			else
+				++img_index;
+			SendMessage(hStaticImage, STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[img_index]));
 			break;
 		case IDC_LIST_IMAGES:
 			if (HIWORD(wParam) == LBN_SELCHANGE)
 			{
+				EnableWindow(hBtnStart, TRUE);
+
 				img_index = SendMessage(hListImages, LB_GETCURSEL, 0, 0);
 				SendMessage(hStaticImage, STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[img_index]));
 			}
