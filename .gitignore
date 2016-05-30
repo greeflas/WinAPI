@@ -2,6 +2,7 @@
 ipch
 debug
 release
+*.tmp
 *.db
 *.txt
 *.sln
@@ -15,3 +16,7 @@ release
 # Resource files
 images
 *.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp

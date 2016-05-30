@@ -10,10 +10,10 @@ const int IMG_NUM = 6;
 HBITMAP hBmp[IMG_NUM];
 
 // list
-HWND hList;
+HWND hListImages;
 
 // static
-HWND hStaticBmp;
+HWND hStaticImage;
 
 // button
 HWND hBtnStart, hBtnStop, hBtnPrev, hBtnNext;
@@ -30,11 +30,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static int img_index(0);
+
 	switch (message)
 	{
 	case WM_INITDIALOG:
-		hList = GetDlgItem(hDlg, IDC_LIST_IMAGES);
-		hStaticBmp = GetDlgItem(hDlg, IDC_IMAGE);
+		hListImages = GetDlgItem(hDlg, IDC_LIST_IMAGES);
+		hStaticImage = GetDlgItem(hDlg, IDC_IMAGE);
 		hBtnStart = GetDlgItem(hDlg, IDC_BTN_START);
 		hBtnStop = GetDlgItem(hDlg, IDC_BTN_STOP);
 		hBtnPrev = GetDlgItem(hDlg, IDC_BTN_PREV);
@@ -42,19 +44,34 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		for (size_t i = 0; i < IMG_NUM; ++i)
 		{
-			hBmp[i] = LoadBitmap(GetModuleHandle(0), MAKEINTRESOURCE(IDB_BITMAP1 + i));
+			hBmp[i] = LoadBitmap(GetModuleHandle(0), MAKEINTRESOURCE(IDB_BITMAP7 + i));
 		}
 
-		SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)L"1.jpg");
-		SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)L"2.jpg");
-		SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)L"3.jpg");
-		SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)L"4.jpg");
-		SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)L"5.jpg");
-		SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)L"6.jpg");
+		SendMessage(hListImages, LB_ADDSTRING, 0, (LPARAM)L"1.jpg");
+		SendMessage(hListImages, LB_ADDSTRING, 0, (LPARAM)L"2.jpg");
+		SendMessage(hListImages, LB_ADDSTRING, 0, (LPARAM)L"3.jpg");
+		SendMessage(hListImages, LB_ADDSTRING, 0, (LPARAM)L"4.jpg");
+		SendMessage(hListImages, LB_ADDSTRING, 0, (LPARAM)L"5.jpg");
+		SendMessage(hListImages, LB_ADDSTRING, 0, (LPARAM)L"6.jpg");
 		break;
 	case WM_COMMAND:
-		switch (wParam)
+		switch (LOWORD(wParam))
 		{
+		case IDC_BTN_START:
+			break;
+		case IDC_BTN_STOP:
+			break;
+		case IDC_BTN_PREV:
+			break;
+		case IDC_BTN_NEXT:
+			break;
+		case IDC_LIST_IMAGES:
+			if (HIWORD(wParam) == LBN_SELCHANGE)
+			{
+				img_index = SendMessage(hListImages, LB_GETCURSEL, 0, 0);
+				SendMessage(hStaticImage, STM_SETIMAGE, WPARAM(IMAGE_BITMAP), LPARAM(hBmp[img_index]));
+			}
+			break;
 		}
 		break;
 	case WM_CLOSE:
