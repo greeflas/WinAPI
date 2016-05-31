@@ -11,3 +11,7 @@ release
 *.opensdf
 *.vcxproj
 *.vcxproj.filters
+
+# Folders
+homeworks
+Project
