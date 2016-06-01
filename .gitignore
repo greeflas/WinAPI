@@ -2,6 +2,7 @@
 ipch
 debug
 release
+*.tmp
 *.db
 *.txt
 *.sln
@@ -12,6 +13,15 @@ release
 *.vcxproj
 *.vcxproj.filters
 
+
 # Folders
 homeworks
 Project
+
+# Resource files
+images
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
