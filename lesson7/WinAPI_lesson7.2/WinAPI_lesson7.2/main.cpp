@@ -62,13 +62,16 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		SendMessage(hSliderB, TBM_SETTICFREQ, 10, 0);
 		break;
 	case WM_HSCROLL:
+		// get r, g, b
 		r = SendMessage(hSliderR, TBM_GETPOS, 0, 0);
 		g = SendMessage(hSliderG, TBM_GETPOS, 0, 0);
 		b = SendMessage(hSliderB, TBM_GETPOS, 0, 0);
 
+		// add r, g, b to edit
 		swprintf_s(buf, L"%d, %d, %d", r, g, b);
 		SetWindowText(hEditRGB, buf);
 
+		// show prewiev
 		SendMessage(hProgressBar, PBM_SETBKCOLOR, 0,  (LPARAM)RGB(r, g, b));
 		break;
 	case WM_CLOSE:
