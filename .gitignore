@@ -4,6 +4,7 @@ debug
 release
 *.tmp
 *.db
+*.opendb
 *.txt
 *.sln
 *.suo
