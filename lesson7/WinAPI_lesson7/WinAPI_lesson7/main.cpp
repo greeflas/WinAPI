@@ -32,6 +32,8 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	const int BUF_SIZE = 1024;
 	TCHAR buf[BUF_SIZE]{ 0 };
 
+	static int pos(0);
+
 	switch (message)
 	{
 	case WM_INITDIALOG:
@@ -49,6 +51,9 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		// set color to progress bar
 		SendMessage(hProgressBar, PBM_SETBKCOLOR, 0, (LPARAM)RGB(60, 27, 226));
 		SendMessage(hProgressBar, PBM_SETBARCOLOR, 0, (LPARAM)RGB(255, 221, 0));
+
+		// set range
+		SendMessage(hProgressBar, PBM_SETRANGE, 0, MAKELPARAM(0, 100));
 		break;
 	case WM_COMMAND:
 		switch (wParam)
@@ -56,14 +61,35 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		case IDC_BTN_START:
 			EnableWindow(hBtnStop, TRUE);
 			EnableWindow(hBtnReset, FALSE);
+
+			SetTimer(hDlg, 1, 100, NULL);
 			break;
 		case IDC_BTN_STOP:
 			EnableWindow(hBtnReset, TRUE);
+
+			KillTimer(hDlg, 1);
 			break;
 		case IDC_BTN_RESET:
 			EnableWindow(hBtnReset, FALSE);
 			EnableWindow(hBtnStop, FALSE);
+
+			pos = 0;
+			SendMessage(hProgressBar, PBM_SETPOS, pos, 0);
 			break;
+		}
+		break;
+	case WM_TIMER:
+		SendMessage(hProgressBar, PBM_SETPOS, pos, 0);
+		swprintf_s(buf, L"%d", pos);
+		SetWindowText(hStaticPercent, buf);
+
+		if (pos != 100)
+			++pos;
+		else
+		{
+			KillTimer(hDlg, 1);
+			EnableWindow(hBtnStop, FALSE);
+			MessageBox(hDlg, L"Complete!", L"Install", MB_OK | MB_ICONINFORMATION);
 		}
 		break;
 	case WM_CLOSE:
