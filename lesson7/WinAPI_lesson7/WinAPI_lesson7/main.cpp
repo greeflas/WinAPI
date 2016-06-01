@@ -80,7 +80,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_TIMER:
 		SendMessage(hProgressBar, PBM_SETPOS, pos, 0);
-		swprintf_s(buf, L"%d", pos);
+		swprintf_s(buf, L"%d%%", pos);
 		SetWindowText(hStaticPercent, buf);
 
 		if (pos != 100)
@@ -89,6 +89,7 @@ BOOL CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			KillTimer(hDlg, 1);
 			EnableWindow(hBtnStop, FALSE);
+			EnableWindow(hBtnReset, TRUE);
 			MessageBox(hDlg, L"Complete!", L"Install", MB_OK | MB_ICONINFORMATION);
 		}
 		break;
