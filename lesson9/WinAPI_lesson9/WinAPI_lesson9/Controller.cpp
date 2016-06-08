@@ -61,7 +61,25 @@ void Controller::Cls_OnCommand(HWND hWnd,
 							HWND hCtl,
 							UINT codeNotify)
 {
-
+	switch (id)
+	{
+	case IDC_CHECK_PARAM1: {
+		LRESULT res = SendMessage(hCheckParam1, BM_GETCHECK, 0, 0);
+		if (res == BST_CHECKED)
+			SendMessage(hStatus, SB_SETTEXT, 2, (LPARAM)L"Param 1: true");
+		else
+			SendMessage(hStatus, SB_SETTEXT, 2, (LPARAM)L"Param 1: false");
+		break;
+	}
+	case IDC_CHECK_PARAM2: {
+		LRESULT res = SendMessage(hCheckParam2, BM_GETCHECK, 0, 0);
+		if (res == BST_CHECKED)
+			SendMessage(hStatus, SB_SETTEXT, 3, (LPARAM)L"Param 2: true");
+		else
+			SendMessage(hStatus, SB_SETTEXT, 3, (LPARAM)L"Param 2: false");
+		break;
+	}
+	}
 }
 
 void Controller::Cls_OnClose(HWND hWnd)
