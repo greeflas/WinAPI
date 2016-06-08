@@ -14,6 +14,9 @@ public:
 	HWND hSpin;
 	HWND hEdit;
 
+	// Icons
+	HICON hIcon;
+
 	Controller();
 	static BOOL CALLBACK DlgProc(HWND hWnd,
 		UINT message,

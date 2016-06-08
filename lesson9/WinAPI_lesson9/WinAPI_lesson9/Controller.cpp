@@ -39,13 +39,17 @@ BOOL Controller::Cls_OnInitDialog(HWND hWnd,
 								WM_USER);
 
 	const int PARTS_NUM = 4;
-	int parts[PARTS_NUM] { 0, 70, 160, -1 };
+	int parts[PARTS_NUM] { 0, 100, 200, -1 };
 
 	SendMessage(hStatus, SB_SETPARTS, PARTS_NUM, (LPARAM)parts);
 	SendMessage(hStatus, SB_SETTEXT, 1, (LPARAM)L"Counter: 0");
 	SendMessage(hStatus, SB_SETTEXT, 2, (LPARAM)L"Param 1: off");
 	SendMessage(hStatus, SB_SETTEXT, 3, (LPARAM)L"Param 2: off");
 
+	// Set icon
+	hIcon = LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_ICON1));
+	SendMessage(hStatus, SB_SETICON, 1, (LPARAM)hIcon);
+	
 	return TRUE;
 }
 
