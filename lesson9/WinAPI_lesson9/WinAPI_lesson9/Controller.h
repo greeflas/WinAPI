@@ -13,6 +13,7 @@ public:
 	HWND hCheckParam1, hCheckParam2;
 	HWND hSpin;
 	HWND hEdit;
+	HWND hMenu;
 
 	// Icons
 	HICON hIcon;

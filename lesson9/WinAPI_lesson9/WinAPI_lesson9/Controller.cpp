@@ -30,6 +30,7 @@ BOOL Controller::Cls_OnInitDialog(HWND hWnd,
 	hCheckParam2 = GetDlgItem(hWnd, IDC_CHECK_PARAM2);
 	hSpin = GetDlgItem(hWnd, IDC_SPIN);
 	hEdit = GetDlgItem(hWnd, IDC_EDIT);
+	hMenu = GetDlgItem(hWnd, IDR_MENU);
 
 	SendMessage(hSpin, UDM_SETRANGE32, -50, 50);
 	SetWindowText(hEdit, L"0");
@@ -78,6 +79,16 @@ void Controller::Cls_OnCommand(HWND hWnd,
 			SendMessage(hStatus, SB_SETTEXT, 3, (LPARAM)L"Param 2: true");
 		else
 			SendMessage(hStatus, SB_SETTEXT, 3, (LPARAM)L"Param 2: false");
+		break;
+	}
+	case ID_COW_FEED: {
+		const int BUFF_SIZE = 1024;
+		TCHAR buf[BUFF_SIZE] { 0 };
+
+		int val = SendMessage(hStatus, SB_GETTEXT, 1, 0);
+		swprintf_s(buf, L"Weight: %d", val + 1);
+
+		SendMessage(hStatus, SB_SETTEXT, 1, (LPARAM)buf);
 		break;
 	}
 	}
