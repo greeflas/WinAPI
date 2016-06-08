@@ -4,6 +4,7 @@ debug
 release
 *.tmp
 *.db
+*.opendb
 *.txt
 *.sln
 *.suo
@@ -12,6 +13,11 @@ release
 *.opensdf
 *.vcxproj
 *.vcxproj.filters
+
+
+# Folders
+homeworks
+Project
 
 # Resource files
 images
