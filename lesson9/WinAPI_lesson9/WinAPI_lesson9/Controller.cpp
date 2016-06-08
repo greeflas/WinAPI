@@ -49,6 +49,9 @@ BOOL Controller::Cls_OnInitDialog(HWND hWnd,
 	// Set icon
 	hIcon = LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_ICON1));
 	SendMessage(hStatus, SB_SETICON, 1, (LPARAM)hIcon);
+
+	// Set background color
+	SendMessage(hStatus, SB_SETBKCOLOR, 0, (LPARAM)RGB(0, 160, 0));
 	
 	return TRUE;
 }
