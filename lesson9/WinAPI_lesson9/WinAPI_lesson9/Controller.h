@@ -29,6 +29,7 @@ public:
 		int id,
 		HWND hCtl,
 		UINT codeNotify);
+	void Cls_OnVScroll(HWND hWnd, HWND hCtrl, UINT code, int pos);
 	void Cls_OnClose(HWND hWnd);
 };
 

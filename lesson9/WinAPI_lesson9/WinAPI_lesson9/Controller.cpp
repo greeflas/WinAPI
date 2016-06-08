@@ -14,9 +14,10 @@ BOOL CALLBACK Controller::DlgProc(HWND hWnd,
 {
 	switch (message)
 	{
-		HANDLE_MSG(hWnd, WM_CLOSE, ptr->Cls_OnClose);
 		HANDLE_MSG(hWnd, WM_INITDIALOG, ptr->Cls_OnInitDialog);
 		HANDLE_MSG(hWnd, WM_COMMAND, ptr->Cls_OnCommand);
+		HANDLE_MSG(hWnd, WM_VSCROLL, ptr->Cls_OnVScroll);
+		HANDLE_MSG(hWnd, WM_CLOSE, ptr->Cls_OnClose);
 	}
 	return FALSE;
 }
@@ -42,7 +43,7 @@ BOOL Controller::Cls_OnInitDialog(HWND hWnd,
 	int parts[PARTS_NUM] { 0, 100, 200, -1 };
 
 	SendMessage(hStatus, SB_SETPARTS, PARTS_NUM, (LPARAM)parts);
-	SendMessage(hStatus, SB_SETTEXT, 1, (LPARAM)L"Counter: 0");
+	SendMessage(hStatus, SB_SETTEXT, 1, (LPARAM)L"Weight: 0");
 	SendMessage(hStatus, SB_SETTEXT, 2, (LPARAM)L"Param 1: off");
 	SendMessage(hStatus, SB_SETTEXT, 3, (LPARAM)L"Param 2: off");
 
@@ -80,6 +81,18 @@ void Controller::Cls_OnCommand(HWND hWnd,
 		break;
 	}
 	}
+}
+
+void Controller::Cls_OnVScroll(HWND hWnd,
+							HWND hCtrl,
+							UINT code,
+							int pos)
+{
+	const int BUFF_SIZE = 1024;
+	TCHAR buf[BUFF_SIZE] { 0 };
+
+	swprintf_s(buf, L"Weight: %d", pos);
+	SendMessage(hStatus, SB_SETTEXT, 1, (LPARAM)buf);
 }
 
 void Controller::Cls_OnClose(HWND hWnd)
