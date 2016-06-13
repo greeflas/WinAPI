@@ -1,12 +1,20 @@
 #include "Controller.h"
 
+// static variables
 Controller *Controller::ptr = nullptr;
 
+// construct - destruct
 Controller::Controller()
 {
 	ptr = this;
 }
 
+Controller::~Controller()
+{
+
+}
+
+// control methods
 BOOL CALLBACK Controller::DlgProc(HWND hWnd,
 								UINT message,
 								WPARAM wParam,
@@ -16,9 +24,10 @@ BOOL CALLBACK Controller::DlgProc(HWND hWnd,
 	{
 		HANDLE_MSG(hWnd, WM_INITDIALOG, ptr->Cls_OnInitDialog);
 		HANDLE_MSG(hWnd, WM_COMMAND, ptr->Cls_OnCommand);
-		HANDLE_MSG(hWnd, WM_VSCROLL, ptr->Cls_OnVScroll);
 		HANDLE_MSG(hWnd, WM_CLOSE, ptr->Cls_OnClose);
 	}
+
+
 	return FALSE;
 }
 
@@ -35,14 +44,6 @@ void Controller::Cls_OnCommand(HWND hWnd,
 							int id,
 							HWND hCtl,
 							UINT codeNotify)
-{
-	
-}
-
-void Controller::Cls_OnVScroll(HWND hWnd,
-							HWND hCtrl,
-							UINT code,
-							int pos)
 {
 	
 }

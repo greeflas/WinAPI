@@ -9,22 +9,20 @@ class Controller
 public:
 	static Controller *ptr;
 
-	// handlers
-	
-
 	Controller();
+	~Controller();
+
 	static BOOL CALLBACK DlgProc(HWND hWnd,
 								UINT message,
 								WPARAM wParam,
 								LPARAM lParam);
-	BOOL Cls_OnInitDialog(HWND hWnd,
-						HWND hWndFocus,
-						LPARAM lParam);
-	void Cls_OnCommand(HWND hWnd,
-					int id,
-					HWND hCtl,
-					UINT codeNotify);
-	void Cls_OnVScroll(HWND hWnd, HWND hCtrl, UINT code, int pos);
+	virtual BOOL Cls_OnInitDialog(HWND hWnd,
+								HWND hWndFocus,
+								LPARAM lParam);
+	virtual void Cls_OnCommand(HWND hWnd,
+							int id,
+							HWND hCtl,
+							UINT codeNotify);
 	void Cls_OnClose(HWND hWnd);
 };
 
