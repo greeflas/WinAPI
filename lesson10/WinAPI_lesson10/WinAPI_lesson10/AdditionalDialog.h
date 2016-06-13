@@ -1,19 +1,19 @@
-#ifndef MAIN_DIALOG_H
-#define MAIN_DIALOG_H
+#ifndef ADDITIONAL_DIALOG_H
+#define ADDITIONAL_DIALOG_H
 
 #include "Controller.h"
 #include "resource.h"
 
-class MainDialog: public Controller
+class AdditionalDialog: public Controller
 {
-	// handlers
-	HWND hEdit;
-	HWND hBtn;
+	// hendlers
+	HWND hEditRes;
 
 	TCHAR *text;
 public:
-	MainDialog();
-	~MainDialog();
+	AdditionalDialog();
+	AdditionalDialog(TCHAR *text);
+	~AdditionalDialog();
 
 	BOOL Cls_OnInitDialog(HWND hWnd,
 						HWND hWndFocus,
@@ -24,4 +24,4 @@ public:
 					UINT codeNotify);
 };
 
-#endif // MAIN_DIALOG_H
+#endif // ADDITIONAL_DIALOG_H

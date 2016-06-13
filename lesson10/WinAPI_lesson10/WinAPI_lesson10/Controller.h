@@ -20,7 +20,7 @@ public:
 								HWND hWndFocus,
 								LPARAM lParam);
 	virtual void Cls_OnCommand(HWND hWnd,
-							int id,
+							int ctl_id,
 							HWND hCtl,
 							UINT codeNotify);
 	void Cls_OnClose(HWND hWnd);

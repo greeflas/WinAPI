@@ -41,7 +41,7 @@ BOOL Controller::Cls_OnInitDialog(HWND hWnd,
 }
 
 void Controller::Cls_OnCommand(HWND hWnd,
-							int id,
+							int ctl_id,
 							HWND hCtl,
 							UINT codeNotify)
 {
