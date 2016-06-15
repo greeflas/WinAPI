@@ -17,6 +17,9 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 HWND hList;
 HWND hEdit;
 HWND hBtnDel, hBtnAdd, hBtnEdit;
+// 'Student information' form
+HWND hEditName, hEditBirth, hEditEmail, hEditAddress, hEditPhone;
+HWND hBtnOK, hBtnCancel;
 
 // Students
 const int STUDENTS_NUM = 3;
@@ -225,6 +228,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case IDC_BTN_ADD:
 			DialogBox(GetModuleHandle(0), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, DlgProc);
+
+			SendMessage(hList, LB_RESETCONTENT, 0, 0);
+			for (auto itr = v.begin(); itr < v.end(); ++itr)
+				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)itr->name);
+			SendMessage(hList, LB_SETCURSEL, 0, 0);
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
@@ -267,17 +275,53 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 // Message hendler for form "Student information"
 INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	const int BUFF_SIZE = 1024;
+	TCHAR buf[BUFF_SIZE] { 0 };
+
 	UNREFERENCED_PARAMETER(lParam);
 	switch (message)
 	{
 	case WM_INITDIALOG:
-		return (INT_PTR)TRUE;
+		hEditName = GetDlgItem(hDlg, IDC_EDIT_NAME);
+		hEditBirth = GetDlgItem(hDlg, IDC_EDIT_BIRTH);
+		hEditEmail = GetDlgItem(hDlg, IDC_EDIT_EMAIL);
+		hEditAddress = GetDlgItem(hDlg, IDC_EDIT_ADDRESS);
+		hEditPhone = GetDlgItem(hDlg, IDC_EDIT_PHONE);
+		hBtnOK = GetDlgItem(hDlg, IDC_BTN_OK);
+		hBtnCancel = GetDlgItem(hDlg, IDC_BTN_CANCEL);
+		break;
 
 	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		
+		switch (wParam)
 		{
+		case IDCANCEL:
+		case IDC_BTN_CANCEL:
 			EndDialog(hDlg, LOWORD(wParam));
 			return (INT_PTR)TRUE;
+		case IDC_BTN_OK:
+			Student s;
+
+			GetWindowText(hEditName, buf, BUFF_SIZE);
+			lstrcpy(s.name, buf);
+
+			GetWindowText(hEditBirth, buf, BUFF_SIZE);
+			lstrcpy(s.birth, buf);
+
+			GetWindowText(hEditEmail, buf, BUFF_SIZE);
+			lstrcpy(s.email, buf);
+
+			GetWindowText(hEditAddress, buf, BUFF_SIZE);
+			lstrcpy(s.adress, buf);
+
+			GetWindowText(hEditPhone, buf, BUFF_SIZE);
+			lstrcpy(s.phone, buf);
+
+			v.push_back(s);
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+			break;
 		}
 		break;
 	}
