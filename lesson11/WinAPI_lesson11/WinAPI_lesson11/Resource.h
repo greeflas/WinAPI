@@ -18,6 +18,13 @@
 #define IDC_STATIC				-1
 #endif
 
+// Constants for controls
+#define IDC_LIST		2001
+#define IDC_EDIT		3001
+#define IDC_BTN_DEL		4001
+#define IDC_BTN_ADD		4002
+#define IDC_BTN_EDIT	4003
+
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 
