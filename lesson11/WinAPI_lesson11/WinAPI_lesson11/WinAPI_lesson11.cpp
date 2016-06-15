@@ -35,6 +35,8 @@ BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
+INT_PTR CALLBACK	DlgProc(HWND , UINT, WPARAM, LPARAM);
+
 int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPTSTR    lpCmdLine,
@@ -185,7 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		);
 
 		hBtnEdit = CreateWindowEx(
-			0, L"Button", L"Add", WS_CHILD | WS_VISIBLE,
+			0, L"Button", L"Edit", WS_CHILD | WS_VISIBLE,
 			270, 220, 120, 30, hWnd,
 			(HMENU)IDC_EDIT, hInst, 0
 		);
@@ -214,12 +216,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				buf,
 				L" Adress: %s\r\n Date of birth: %s\r\n Phone number: %s\r\n E-mail: %s",
 				v[index].adress,
-				v[index].email,
+				v[index].birth,
 				v[index].phone,
 				v[index].email
 			);
 
 			SetWindowText(hEdit, buf);
+			break;
+		case IDC_BTN_ADD:
+			DialogBox(GetModuleHandle(0), MAKEINTRESOURCE(IDD_DIALOG1), hWnd, DlgProc);
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
@@ -241,6 +246,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 // Message handler for about box.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+	return (INT_PTR)FALSE;
+}
+
+// Message hendler for form "Student information"
+INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	UNREFERENCED_PARAMETER(lParam);
 	switch (message)
