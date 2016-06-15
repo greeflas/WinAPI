@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "WinAPI_lesson11.h"
 
+#include "Student.h"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -11,9 +13,21 @@ HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
+// hendlers
 HWND hList;
 HWND hEdit;
 HWND hBtnDel, hBtnAdd, hBtnEdit;
+
+// Students
+const int STUDENTS_NUM = 3;
+Student students[STUDENTS_NUM] = 
+{
+	{ L"Vasya Pupkin", L"01/01/1970", L"11-111-111", L"vasya@gmail.com", L"Some str. 50/7" },
+	{ L"Petro", L"27/04/1999", L"22-222-222", L"petro@gmail.com", L"Some str. 66/9" },
+	{ L"Elizaveta Pupkina", L"03/01/1973", L"11-111-112", L"lizka.kiska@gmail.com", L"Some str. 50/8" },
+};
+
+std::vector<Student> v(students, students + 3);
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
