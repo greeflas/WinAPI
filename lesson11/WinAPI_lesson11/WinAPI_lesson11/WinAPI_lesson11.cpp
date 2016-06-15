@@ -147,10 +147,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC hdc;
 
+	const int BUFF_SIZE = 1024;
+	TCHAR buf[BUFF_SIZE] { 0 };
+
+	int index(0);
+
 	switch (message)
 	{
 	case WM_CREATE:
-		MoveWindow(hWnd, 800, 400, 550, 320, TRUE);
+		MoveWindow(hWnd, 700, 400, 550, 320, TRUE);
 		SetWindowText(hWnd, L"Students");
 
 		hList = CreateWindowEx(
@@ -184,6 +189,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			270, 220, 120, 30, hWnd,
 			(HMENU)IDC_EDIT, hInst, 0
 		);
+
+		// add students from vector to list box
+		for (auto itr = v.begin(); itr < v.end(); ++itr)
+			SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)itr->name);
+		SendMessage(hList, LB_SETCURSEL, 0, 0);
 		break;
 	case WM_COMMAND:
 		wmId    = LOWORD(wParam);
@@ -196,6 +206,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
+			break;
+		case IDC_LIST:
+			index = SendMessage(hList, LB_GETCURSEL, 0, 0);
+
+			swprintf_s(
+				buf,
+				L" Adress: %s\r\n Date of birth: %s\r\n Phone number: %s\r\n E-mail: %s",
+				v[index].adress,
+				v[index].email,
+				v[index].phone,
+				v[index].email
+			);
+
+			SetWindowText(hEdit, buf);
 			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
