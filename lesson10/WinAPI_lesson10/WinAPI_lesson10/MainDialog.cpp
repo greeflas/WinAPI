@@ -40,7 +40,7 @@ void MainDialog::Cls_OnCommand(HWND hWnd,
 		wcscpy(text, buf);
 
 		AdditionalDialog ad(text);
-		DialogBox(GetModuleHandle(0), MAKEINTRESOURCE(IDD_DIALOG2), NULL, AdditionalDialog::DlgProc);
+		DialogBox(GetModuleHandle(0), MAKEINTRESOURCE(IDD_DIALOG2), hWnd, AdditionalDialog::DlgProc);
 		break;
 	}
 }
